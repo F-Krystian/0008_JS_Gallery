@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <h1 class="main-header">Gallery</h1>  
+    <h2 class="secondary-header">Cats</h2>
+    <div class="minis-container container-cats">
+      <div class="mini-image">
+        <img src="./img/cats/cat-01.avif" alt="cat" srcset="" data-tag="cats" data-id="1" class="mini-image-img">
+      </div>
+      <div class="mini-image">
+        <img src="./img/cats/cat-02.avif" alt="cat" srcset="" data-tag="cats" data-id="2" class="mini-image-img">
+      </div>
+      <div class="mini-image">
+        <img src="./img/cats/cat-03.avif" alt="cat" srcset="" data-tag="cats" data-id="3" class="mini-image-img">
+      </div>
+      <div class="mini-image">
+        <img src="./img/cats/cat-04.avif" alt="cat" srcset="" data-tag="cats" data-id="4" class="mini-image-img">
+      </div>
+    </div>
+    <h2 class="secondary-header">Dogs</h2>
+    <div class="minis-container container-dogs">
+      <div class="mini-image">
+        <img src="./img/dogs/dog-01.avif" alt="dog" srcset="" data-tag="dogs" data-id="5"  class="mini-image-img">
+      </div>
+      <div class="mini-image">
+        <img src="./img/dogs/dog-02.avif" alt="dog" srcset="" data-tag="dogs" data-id="6" class="mini-image-img">
+      </div>
+      <div class="mini-image">
+        <img src="./img/dogs/dog-03.avif" alt="dog" srcset="" data-tag="dogs" data-id="7" class="mini-image-img">
+      </div>
+      <div class="mini-image">
+        <img src="./img/dogs/dog-04.avif" alt="dog" srcset="" data-tag="dogs" data-id="8" class="mini-image-img">
+      </div>
+    </div>
+  </div> 
+
+<!-- Overlay -->
+<div class="overlay ">
+  <div class="enlarged-gallery">
+    <button class="enlarged-gallery__btn-close material-symbols-outlined">close</button>
+    <h1 class="enlarged-gallery__header">Gallery Name</h1>
+    <div class="enlarged-gallery__main-image">
+      <button class="enlarged-gallery__main-image__btn main-image__btn-prev material-symbols-outlined">navigate_before</button>
+      <div class="main-image-img">
+        <img src="./img/cats/cat-01.avif" alt="" srcset="" data-tag="cat" class="main-image-img__src">
+      </div>
+      <button class="enlarged-gallery__main-image__btn main-image__btn-next material-symbols-outlined">navigate_next</button>  
+    </div>
+    <div class="enlarged-gallery__previews">
+      <button class="enlarged-gallery__previews__btn previews__btn-prev material-symbols-outlined">navigate_before</button>
+      <div class="enlarged-gallery__previews__content">
+          <!-- <img src="./img/cats/cat-01.avif" alt="" srcset="" data-tag="cat" class="preview-image-img active">
+          <img src="./img/cats/cat-02.avif" alt="" srcset="" data-tag="cat" class="preview-image-img non-active">
+          <img src="./img/cats/cat-03.avif" alt="" srcset="" data-tag="cat" class="preview-image-img non-active">
+          <img src="./img/cats/cat-04.avif" alt="" srcset="" data-tag="cat" class="preview-image-img non-active">
+          <img src="./img/cats/cat-03.avif" alt="" srcset="" data-tag="cat" class="preview-image-img non-active"> -->
+      </div>
+      <button class="enlarged-gallery__previews__btn previews__btn-next material-symbols-outlined">navigate_next</button>
+    </div>
+  </div> 
+</div>
+</body>
+</html>
