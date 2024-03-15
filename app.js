@@ -67,9 +67,7 @@ class Gallery {
     this.mainImage.src = selectedImg.src;
     this.mainImage.dataset.tag = selectedImg.dataset.tag;
     this.mainImage.dataset.id = selectedImg.dataset.id;
-    this.itemsList.forEach((item) => {
-      console.log(item.src)
-    })
+    this.selectActiveMiniature(selectedImg); 
   }
 
   setHeader(selectedImg){
@@ -95,6 +93,7 @@ class Gallery {
     let selectedId = selectedImg.dataset.id;
     console.log(selectedId);
     previewImages.forEach((img) => {
+      img.addEventListener('click', () => this.setMainImg(img))
       if(img.dataset.id == selectedId) {
         img.classList.add('active');
         img.classList.remove('non-active');
