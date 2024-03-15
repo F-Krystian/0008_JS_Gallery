@@ -14,14 +14,14 @@ class Gallery {
     this.set  = itemsSet;
     this.itemsList = [...itemsSet.querySelectorAll('.mini-image-img')];
 
-
     this.modal = getElement('.overlay');
     this.header = getElement('.enlarged-gallery__header');
     this.mainImage = getElement('.main-image-img__src');
     this.miniaturesContainer = getElement('.enlarged-gallery__previews__content');
+    
     this.closeBtn = getElement('.enlarged-gallery__btn-close');
-    this.largeBtnPrev = getElement('.main-image__btn-prev')
-    this.largeBtnNext = getElement('.main-image__btn-next')
+    this.largeBtnPrev = getElement('.main-image__btn-prev');
+    this.largeBtnNext = getElement('.main-image__btn-next');
 
 // Binding
 // Set auto openning of modal on click on any of images
@@ -31,6 +31,7 @@ class Gallery {
     this.setMiniaturesList = this.setMiniaturesList.bind(this);
     this.prevImage = this.prevImage.bind(this);
     this.nextImage = this.nextImage.bind(this);
+    this.selectActiveMiniature = this.selectActiveMiniature;
     this.set.addEventListener('click', function(e){
       if(e.target.classList.contains('mini-image-img')){
         console.log(e.target)
@@ -49,6 +50,7 @@ class Gallery {
     this.setMainImg(selectedImg);
     this.setHeader(selectedImg);
     this.setMiniaturesList();
+    this.selectActiveMiniature(selectedImg);    
 
     this.largeBtnPrev.addEventListener('click', this.prevImage);
     this.largeBtnNext.addEventListener('click', this.nextImage);
@@ -65,7 +67,9 @@ class Gallery {
     this.mainImage.src = selectedImg.src;
     this.mainImage.dataset.tag = selectedImg.dataset.tag;
     this.mainImage.dataset.id = selectedImg.dataset.id;
-    ;
+    this.itemsList.forEach((item) => {
+      console.log(item.src)
+    })
   }
 
   setHeader(selectedImg){
@@ -80,39 +84,25 @@ class Gallery {
   }
 
   prevImage() {
-    let imgId = parseInt(this.mainImage.dataset.id);
-    let prevImgId = imgId - 1;
 
-    if(prevImgId > 0){
-      let prevImg = this.itemsList.find((img) =>{
-        return parseInt(img.dataset.id) === prevImgId;
-      })  
-      this.setMainImg(prevImg);     
-    } else if (prevImgId <= 0) {
-      prevImgId = this.itemsList.length;
-      let prevImg = this.itemsList.find((img) =>{
-        return parseInt(img.dataset.id) === prevImgId;
-      })  
-      this.setMainImg(prevImg); 
-    }    
   } 
 
   nextImage() {
-    let imgId = parseInt(this.mainImage.dataset.id);
-    let nextImgId = imgId + 1;
+  }
 
-    if(nextImgId <= this.itemsList.length){
-      let nextImg = this.itemsList.find((img) => {
-        return parseInt(img.dataset.id) === nextImgId;
-      })
-      this.setMainImg(nextImg);
-    } else if (nextImgId > this.itemsList.length) {
-      nextImgId = 1;
-      let nextImg = this.itemsList.find((img) => {
-        return parseInt(img.dataset.id) === nextImgId;
-      })
-      this.setMainImg(nextImg);
-    }
+  selectActiveMiniature(selectedImg){
+    let previewImages = [...this.miniaturesContainer.querySelectorAll('.preview-image-img')];
+    let selectedId = selectedImg.dataset.id;
+    console.log(selectedId);
+    previewImages.forEach((img) => {
+      if(img.dataset.id == selectedId) {
+        img.classList.add('active');
+        img.classList.remove('non-active');
+      } else {
+        img.classList.remove('active');
+        img.classList.add('non-active');
+      }
+    })
   }
 }
 
