@@ -20,8 +20,10 @@ class Gallery {
     this.miniaturesContainer = getElement('.enlarged-gallery__previews__content');
     
     this.closeBtn = getElement('.enlarged-gallery__btn-close');
-    this.largeBtnPrev = getElement('.main-image__btn-prev');
-    this.largeBtnNext = getElement('.main-image__btn-next');
+    this.mainBtnPrev = getElement('.main-image__btn-prev');
+    this.mainBtnNext = getElement('.main-image__btn-next');
+    this.miniaturesBtnPrev = getElement('.previews__btn-prev');
+    this.miniaturesBtnNext = getElement('.previews__btn-next');
 
 // Binding
 // Set auto openning of modal on click on any of images
@@ -29,9 +31,11 @@ class Gallery {
     this.setMainImg = this.setMainImg.bind(this);
     this.setHeader = this.setHeader.bind(this);
     this.setMiniaturesList = this.setMiniaturesList.bind(this);
-    this.prevImage = this.prevImage.bind(this);
-    this.nextImage = this.nextImage.bind(this);
-    this.selectActiveMiniature = this.selectActiveMiniature;
+    this.mainPrevImage = this.mainPrevImage.bind(this);
+    this.mainNextImage = this.mainNextImage.bind(this);
+    this.selectActiveMiniature = this.selectActiveMiniature.bind(this);
+    this.miniaturesPrevImages = this.miniaturesPrevImages.bind(this);
+    this.miniaturesNextImages = this.miniaturesNextImages.bind(this);
     this.set.addEventListener('click', function(e){
       if(e.target.classList.contains('mini-image-img')){
         console.log(e.target)
@@ -52,15 +56,19 @@ class Gallery {
     this.setMiniaturesList();
     this.selectActiveMiniature(selectedImg);    
 
-    this.largeBtnPrev.addEventListener('click', this.prevImage);
-    this.largeBtnNext.addEventListener('click', this.nextImage);
+    this.mainBtnPrev.addEventListener('click', this.mainPrevImage);
+    this.mainBtnNext.addEventListener('click', this.mainNextImage);
+    this.miniaturesBtnPrev.addEventListener('click', this.miniaturesPrevImages);
+    this.miniaturesBtnNext.addEventListener('click', this.miniaturesNextImages);
   }
 
   closeModal(){
     this.modal.classList.remove('active');
     this.closeBtn.removeEventListener('click', this.closeModal);
-    this.largeBtnPrev.removeEventListener('click', this.prevImage);
-    this.largeBtnNext.removeEventListener('click', this.nextImage);
+    this.mainBtnPrev.removeEventListener('click', this.mainPrevImage);
+    this.mainBtnNext.removeEventListener('click', this.mainNextImage);
+    this.miniaturesBtnPrev.removeEventListener('click', this.miniaturesPrevImages);
+    this.miniaturesBtnNext.removeEventListener('click', this.miniaturesNextImages);
   }
 
   setMainImg(selectedImg){
@@ -81,17 +89,48 @@ class Gallery {
     this.miniaturesContainer.insertAdjacentHTML('afterbegin', imagesHTML);
   }
 
-  prevImage() {
+  mainPrevImage() {
+    // 2. In the itemsList find index of selectedElement
+    let imageIndex = this.itemsList.findIndex((item) => {
+      return item.dataset.id === this.mainImage.dataset.id
+    })
+    // 3. Get item with position -1/+1 
+    // 3.1 If position is smaller than 0, then get index with itemsList length
+    // 3.2 If position is larger than itemsList length, then change index to 0    
+    if (imageIndex <= 0) {
+      imageIndex = this.itemsList.length - 1;
+    } else {
+      imageIndex = imageIndex - 1;
+    }
+    // 4. Change selectedElement src data: src, id ... to data from folund element in the array
+    this.mainImage.src = this.itemsList[imageIndex].src;
+    this.mainImage.dataset.tag = this.itemsList[imageIndex].dataset.tag;
+    this.mainImage.dataset.id = this.itemsList[imageIndex].dataset.id;
 
+    // 5. Run selectActiveMiniature
+    this.selectActiveMiniature(this.mainImage); 
   } 
 
-  nextImage() {
+  mainNextImage() {
+    let imageIndex = this.itemsList.findIndex((item) => {
+      return item.dataset.id === this.mainImage.dataset.id
+    })
+ 
+    if (imageIndex >= this.itemsList.length - 1) {
+      imageIndex = 0;
+    } else {
+      imageIndex = imageIndex + 1;
+    }
+    this.mainImage.src = this.itemsList[imageIndex].src;
+    this.mainImage.dataset.tag = this.itemsList[imageIndex].dataset.tag;
+    this.mainImage.dataset.id = this.itemsList[imageIndex].dataset.id;
+
+    this.selectActiveMiniature(this.mainImage); 
   }
 
   selectActiveMiniature(selectedImg){
     let previewImages = [...this.miniaturesContainer.querySelectorAll('.preview-image-img')];
     let selectedId = selectedImg.dataset.id;
-    console.log(selectedId);
     previewImages.forEach((img) => {
       img.addEventListener('click', () => this.setMainImg(img))
       if(img.dataset.id == selectedId) {
@@ -102,6 +141,15 @@ class Gallery {
         img.classList.add('non-active');
       }
     })
+  }
+
+// Carousel for miniatures preview
+  miniaturesPrevImages(){
+
+  }
+
+  miniaturesNextImages(){
+
   }
 }
 
