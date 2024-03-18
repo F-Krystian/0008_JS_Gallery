@@ -24,6 +24,7 @@ class Gallery {
     this.mainBtnNext = getElement('.main-image__btn-next');
     this.miniaturesBtnPrev = getElement('.previews__btn-prev');
     this.miniaturesBtnNext = getElement('.previews__btn-next');
+    this.currentSlide = 0;
 
 // Binding
 // Set auto openning of modal on click on any of images
@@ -38,7 +39,6 @@ class Gallery {
     this.miniaturesNextImages = this.miniaturesNextImages.bind(this);
     this.set.addEventListener('click', function(e){
       if(e.target.classList.contains('mini-image-img')){
-        console.log(e.target)
         this.openModal(e.target, this.itemsList)
       }
     }.bind(this)
@@ -48,7 +48,6 @@ class Gallery {
   }
 
   openModal(selectedImg, list){
-    console.log(this.itemsList)
     this.modal.classList.add('active');
     this.closeBtn.addEventListener('click', this.closeModal);
     this.setMainImg(selectedImg);
@@ -145,11 +144,39 @@ class Gallery {
 
 // Carousel for miniatures preview
   miniaturesPrevImages(){
+    const containerWidth = this.miniaturesContainer.offsetWidth;
+    const moveDistance = containerWidth / 4;
 
+    // Calculate new scroll position
+    let newScrollLeft = this.miniaturesContainer.scrollLeft - moveDistance;
+    if (newScrollLeft < 0) {
+      // If scrolling past the start, move to the end (carousel effect)
+      newScrollLeft = this.miniaturesContainer.scrollWidth - containerWidth;
+    }
+
+    // Scroll the container
+    this.miniaturesContainer.scrollTo({
+      left: newScrollLeft,
+      behavior: 'smooth'
+    });
   }
 
   miniaturesNextImages(){
+    const containerWidth = this.miniaturesContainer.offsetWidth;
+    const moveDistance = containerWidth / 4;
 
+    // Calculate new scroll position
+    let newScrollLeft = this.miniaturesContainer.scrollLeft + moveDistance;
+    if (newScrollLeft + containerWidth > this.miniaturesContainer.scrollWidth) {
+      // If scrolling past the end, move to the start (carousel effect)
+      newScrollLeft = 0;
+    }
+
+    // Scroll the container
+    this.miniaturesContainer.scrollTo({
+      left: newScrollLeft,
+      behavior: 'smooth'
+    });
   }
 }
 
